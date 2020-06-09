@@ -2,7 +2,10 @@
 const todoInput = document.querySelector(".todo-input");
 const todoButton = document.querySelector(".todo-btn");
 const todoList = document.querySelector(".todo-list");
-const filterOption = document.querySelector('.filter-option')
+const filterOption = document.querySelector('.filter-option');
+const errorTab = document.getElementsByClassName('error-container');
+
+// console.log();
 
 //Event Listeners
 todoButton.addEventListener('click', addToDo);
@@ -10,6 +13,8 @@ todoButton.addEventListener('click', addToDo);
 todoList.addEventListener('click', deleteFunction);
 
 filterOption.addEventListener('click', filterTodo);
+
+errorTab[0].childNodes[3].childNodes[1].addEventListener('click', closeErrowWindow);
 
 document.addEventListener('DOMContentLoaded', getTodos);
 
@@ -41,10 +46,10 @@ function addToDo(event){
     todoDiv.appendChild(trashButton);
 
     if(todoInput.value == ""){
-        alert("Вы забыли ввести задание")
+        errorTab[0].style.display = 'flex';
     }else{
         todoList.appendChild(todoDiv); //append to todoList
-        saveLocalTodos(todoInput.value);
+        saveLocalTodos(todoInput.value); 
         todoInput.value = "";
     }
 }
@@ -151,4 +156,10 @@ function removeLocalStorageTodo(todo){
     todos.splice(todos.indexOf(todoIndex),1);
 
     localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+function closeErrowWindow(event){
+    event.preventDefault();
+    console.log("Hello")
+    errorTab[0].style.display = 'none';
 }
